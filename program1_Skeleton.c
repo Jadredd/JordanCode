@@ -8,8 +8,8 @@
 #include<string.h>
 #define LIMIT 20
 
-//char ** doubleIt(char **arr, int *maxsize); 
-//char ** populate(char ** words, FILE *fptr, int *currentsize, int *maxsize);
+char ** doubleIt(char **arr, int *maxsize);
+char ** populate(char ** words, FILE *fptr, int *currentsize, int *maxsize);
 //char* generateSentence(char ** noun, char ** verb, char ** adjective, char ** preposition, char ** article, int nounsize, int verbsize, int adjsize, int prepositionsize, int articlesize); //write sentence to console window
 //void generateStory(char ** noun, char ** verb, char ** adjective, char ** preposition, char ** article, int nounsize, int verbsize, int adjsize, int prepositionsize, int articlesize, FILE *fptr); //write story to txt file
 //void displaySentence(char * sentence);
@@ -44,7 +44,7 @@ int main()
 	char ** preposition = NULL;
 	char ** articles = NULL;
 	
-	nouns = (char **) malloc(sizeof(char *) * nounmaxsize); 
+	nouns = (char **) malloc(sizeof(char *) * nounmaxsize);
 	verbs = (char **) malloc(sizeof(char *) * verbmaxsize);
 	adjectives = (char **) malloc(sizeof(char *) * adjmaxsize); 
 	preposition = (char **) malloc(sizeof(char *) * prepositionmaxsize); 
@@ -81,10 +81,10 @@ int main()
 	}
 	
 	//populate the dynamic array
-	//nouns = populate(nouns, fptr, &nounsize, &nounmaxsize); //populate nouns
-	//verbs = populate(verbs, fptr2, &verbsize, &verbmaxsize); //populate verbs
-	//adjectives = populate(adjectives, fptr3, &adjsize, &adjmaxsize); //populate adjectives
-	//preposition = populate(preposition, fptr4, &prepositionsize, &prepositionmaxsize); //populate prepositions
+	nouns = populate(nouns, fptr, &nounsize, &nounmaxsize); //populate nouns
+	verbs = populate(verbs, fptr2, &verbsize, &verbmaxsize); //populate verbs
+	adjectives = populate(adjectives, fptr3, &adjsize, &adjmaxsize); //populate adjectives
+	preposition = populate(preposition, fptr4, &prepositionsize, &prepositionmaxsize); //populate prepositions
 	
 	//close the files
 	fclose(fptr);
@@ -98,9 +98,9 @@ int main()
 	
 	for(int x = 0; x < 5; ++x)
 	{
-		//char * sentence = generateSentence(nouns, verbs, adjectives, preposition, articles, nounsize, verbsize, adjsize, prepositionsize, articlemaxsize);
-		//displaySentence(sentence);
-		//free(sentence);
+		char * sentence = generateSentence(nouns, verbs, adjectives, preposition, articles, nounsize, verbsize, adjsize, prepositionsize, articlemaxsize);
+		displaySentence(sentence);
+		free(sentence);
 	}
 	
 	printf("Now let's create three stories that just don't make sense.\n");
@@ -124,3 +124,41 @@ int main()
 	
 	return 0;
 }
+
+
+char ** populate (char ** words, FILE *fptr, int *currentsize, int *maxsize) {
+
+	char line [100];   //allocating space for a line
+	int i;
+	int rowsize = 5;
+
+	while (fgets(line, sizeof(line), fptr) != NULL) {
+		currentsize ++;
+	}
+
+	rewind(fptr);
+
+	for (i=0; i < *maxsize; i++)
+	{
+		words[i] = malloc(sizeof(char)* LIMIT);
+	}
+
+
+}
+
+char ** doubleIt(char **arr, int *maxsize) {
+
+	char ** temp = NULL; // Create a temp, array of pointers
+	int i;
+	temp = (char **) malloc(*maxsize * 2 * sizeof(char)); //assign double the allocated memory to the temp array of pointers
+
+	for (i = 0; i < *maxsize; i++) {// copy the contents of the passed array of pointers to the temp array of pointers
+		temp[i] = arr[i];
+	}
+
+	*maxsize *=2; //Double value in maxsize pointer
+
+	free(arr);//free the passed array
+	return temp;//return the larger array
+}
+
