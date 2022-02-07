@@ -96,12 +96,12 @@ int main()
 	
 	printf("Let's generate some random sentences that don't make sense.\n");
 	
-	for(int x = 0; x < 5; ++x)
-	{
-		char * sentence = generateSentence(nouns, verbs, adjectives, preposition, articles, nounsize, verbsize, adjsize, prepositionsize, articlemaxsize);
-		displaySentence(sentence);
-		free(sentence);
-	}
+	//for(int x = 0; x < 5; ++x)
+	//{
+	//	char * sentence = generateSentence(nouns, verbs, adjectives, preposition, articles, nounsize, verbsize, adjsize, prepositionsize, articlemaxsize);
+	//	displaySentence(sentence);
+	//	free(sentence);
+	//}
 	
 	printf("Now let's create three stories that just don't make sense.\n");
 	fptr = fopen("story1.txt", "w");
@@ -128,19 +128,19 @@ int main()
 
 char ** populate (char ** words, FILE *fptr, int *currentsize, int *maxsize) {
 
-	char line [100];   //allocating space for a line
-	int i;
-	int rowsize = 5;
-
-	while (fgets(line, sizeof(line), fptr) != NULL) {
-		currentsize ++;
-	}
-
-	rewind(fptr);
+	char line [LIMIT];   //allocating buffer space for a line
+	int i, j;
 
 	for (i=0; i < *maxsize; i++)
 	{
 		words[i] = malloc(sizeof(char)* LIMIT);
+	}
+
+	while (fscanf(fptr, "%s", line) != EOF)
+	{
+		
+		
+		++*currentsize;
 	}
 
 

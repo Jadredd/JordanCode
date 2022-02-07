@@ -130,7 +130,6 @@ char ** populate (char ** words, FILE *fptr, int *currentsize, int *maxsize) {
 
 	char line [100];   //allocating space for a line
 	int i;
-	int rowsize = 5;
 
 	while (fgets(line, sizeof(line), fptr) != NULL) {
 		currentsize ++;

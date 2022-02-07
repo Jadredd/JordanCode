@@ -3,14 +3,23 @@
 #include<string.h>
 #define LIMIT 20
 
-char ** populate (char ** words, FILE *fptr, int *currentsize, int *maxsize) {
 
-char line [100];
-int i;
-int line_count;
-int line_length;
 
-line_count = 0;
-while (fgets(line, sizeof(line), fptr) != NULL) {
-line_count ++;
+
+
+
+char ** doubleIt(char **arr, int *maxsize) {
+
+	char ** temp = NULL; // Create a temp, array of pointers
+	int i;
+	temp = (char **) malloc(*maxsize * 2 * sizeof(char)); //assign double the allocated memory to the temp array of pointers
+
+	for (i = 0; i < *maxsize; i++) {// copy the contents of the passed array of pointers to the temp array of pointers
+		temp[i] = arr[i];
+	}
+
+	*maxsize *=2; //Double value in maxsize pointer
+
+	free(arr);//free the passed array
+	return temp;//return the larger array
 }
